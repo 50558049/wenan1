@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则表达式替换HTML文本</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        #copyBtn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <label for="originalHtml">原始HTML代码:</label><br>
+    <textarea id="originalHtml" placeholder="在这里输入或粘贴你的原始HTML代码"></textarea><br>
+
+    <label for="findText">查找文本（每行一个）:</label><br>
+    <textarea id="findText" placeholder="在这里输入要查找的文本，每行一个"></textarea><br>
+
+    <label for="replaceText">替换文本（每行一个）:</label><br>
+    <textarea id="replaceText" placeholder="在这里输入替换后的文本，每行一个"></textarea><br>
+
+    <button id="copyBtn" onclick="replaceTextAndCopy()">替换并复制</button>
+
+    <script>
+        function replaceTextAndCopy() {
+            const originalHtml = document.getElementById('originalHtml').value;
+            const findText = document.getElementById('findText').value.split('\n');
+            const replaceText = document.getElementById('replaceText').value.split('\n');
+
+            let replacedHtml = originalHtml;
+            
+            for (let i = 0; i < findText.length && i < replaceText.length; i++) {
+                const find = findText[i];
+                const replace = replaceText[i];
+
+                // 使用正则表达式全局替换每一行输入的文本
+                replacedHtml = replacedHtml.replace(new RegExp(find, 'g'), replace);
+            }
+
+            // 复制到剪贴板
+            navigator.clipboard.writeText(replacedHtml).then(function() {
+                alert('替换后的HTML代码已复制到剪贴板。');
+            }).catch(function(error) {
+                console.error('无法复制到剪贴板: ', error);
+            });
+        }
+    </script>
+</body>
+</html>
