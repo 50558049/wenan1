@@ -1,1 +1,10 @@
 
+body {
+  width: 300px;
+  font-family: sans-serif;
+}
+
+#images-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
